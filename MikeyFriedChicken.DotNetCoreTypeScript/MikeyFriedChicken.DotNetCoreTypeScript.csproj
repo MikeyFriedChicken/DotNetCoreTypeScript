@@ -7,11 +7,6 @@
 
   <ItemGroup>
     <None Remove="scripts\goodbye.ts" />
-    <None Remove="scripts\tsconfig.json.backup" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="scripts\tsconfig.json.backup" />
   </ItemGroup>
 
   <ItemGroup>
