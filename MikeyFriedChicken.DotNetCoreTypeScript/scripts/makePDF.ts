@@ -1,6 +1,6 @@
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-//import * as fs from "fs";
+import * as fs from "fs";
 //import * as path from "path";
 import TCreatedPdf = pdfMake.TCreatedPdf;
 import TDocumentDefinitions = pdfMake.TDocumentDefinitions;
@@ -30,13 +30,20 @@ module.exports = function (callback: (error: any, result: any) => void, filename
 
     (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
     var pdf: TCreatedPdf = pdfMake.createPdf(docDefinition);
-    pdf.download(`${filename}`);
 
-    //fs.readFile(`${filename}`, "utf8", (error: any, data: any) => {
-    //    callback(null, data);
-    //});
+    var ret: {stuff: any, data: any} = {stuff: "cool", data: "" };
 
-    callback(null, pdf);
+    try {
+        (<any>pdf).getBase64(function (encodedString: any) {
+            ret = { stuff: "hey", data: encodedString };
+            callback(null, ret);
+        });
+       
+    } catch (e) {
+        ret = { stuff: "error", data: e.toString() };
+        callback(null, ret);
+    }
+
 };
 
 

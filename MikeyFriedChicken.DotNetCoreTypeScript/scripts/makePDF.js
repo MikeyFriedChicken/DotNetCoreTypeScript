@@ -23,10 +23,16 @@ module.exports = function (callback, filename) {
     };
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     var pdf = pdfMake.createPdf(docDefinition);
-    pdf.download("" + filename);
-    //fs.readFile(`${filename}`, "utf8", (error: any, data: any) => {
-    //    callback(null, data);
-    //});
-    callback(null, pdf);
+    var ret = { stuff: "cool", data: "" };
+    try {
+        pdf.getBase64(function (encodedString) {
+            ret = { stuff: "hey", data: encodedString };
+            callback(null, ret);
+        });
+    }
+    catch (e) {
+        ret = { stuff: "error", data: e.toString() };
+        callback(null, ret);
+    }
 };
 //# sourceMappingURL=makePDF.js.map

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.NodeServices;
@@ -41,6 +43,9 @@ namespace MikeyFriedChicken.DotNetCoreTypeScript.Services
         {
 
             JObject result = await _nodeServices.InvokeAsync<JObject>("./scripts/makePDF", name);
+            JValue data = (JValue)result["data"];
+            byte[] decodedFromBase64 = Convert.FromBase64String(data.Value.ToString());
+            File.WriteAllBytes("test.pdf", decodedFromBase64);
             return result;
         }
     }
