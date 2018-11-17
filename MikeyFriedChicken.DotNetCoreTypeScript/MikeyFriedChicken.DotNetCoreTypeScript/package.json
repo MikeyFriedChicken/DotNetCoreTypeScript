@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^3.1.6",
+    "@types/node": "^10.12.9",
+    "@types/pdfmake": "^0.1.2"
+  },
+  "dependencies": {
+    "pdfmake": "^0.1.39"
+  }
+}
