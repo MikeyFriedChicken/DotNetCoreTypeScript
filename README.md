@@ -1,4 +1,4 @@
-# Running Typescript and Javascript using Node JS in .net Core
+# Running Typescript and Javascript using Node JS in .Net Core
 
 ### Introduction
 
