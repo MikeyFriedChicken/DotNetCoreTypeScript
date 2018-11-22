@@ -31,8 +31,7 @@ Hence, this post will focus on setting up a .net core project to do just this w
 | PDF Make (example JS dependency used) | http://pdfmake.org |
 
 ### Configure your Project
-Simple add the following line to ConfigureServices in your Startup.cs file:
-
+Simple add the following line to ConfigureServices in your [Startup.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) file:
 ```csharp
 Public void ConfigureServices(IServiceCollection services)
 {
@@ -42,75 +41,67 @@ Public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Next We create a wrapper class called JavaScriptService.cs
-
-This contains the following constructor.  The NodeServices instance will automatically gets injected in on creation.
+Next We create a wrapper class called [JavaScriptService.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs).  This contains the following constructor.  The NodeServices instance automatically gets injected.
 
 ```csharp
-      public JavaScriptService([FromServices]INodeServices nodeServices, string scriptFolder)
-        {
-            _nodeServices = nodeServices;
-            _scriptFolder = scriptFolder;
-        }
+public JavaScriptService([FromServices]INodeServices nodeServices, string scriptFolder)
+{
+    _nodeServices = nodeServices;
+    _scriptFolder = scriptFolder;
+}
 ```
-This is achieved by registering our new service in the ConfigureServices method which will now look like this:
+This is achieved by registering our new IJavaScriptService instance in the ConfigureServices method in [Startup.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) which will now look like this:
 
 ```csharp
 Public void ConfigureServices(IServiceCollection services)
 {
-            services.AddScoped<IJavaScriptService, JavaScriptService>();
+    services.AddScoped<IJavaScriptService, JavaScriptService>();
 
-            // Add node js
-            services.AddNodeServices(options =>
-            {
-                //options.LaunchWithDebugging = true;
-                //options.UseSocketHosting();
-            });
+    // Add node js
+    services.AddNodeServices(options =>
+    {
+        //options.LaunchWithDebugging = true;
+        //options.UseSocketHosting();
+    });
 }
 ```
 
-So to use our node js wrapper from our controller class we simply include the service as a dependency via the constructor:
+So to use our node js wrapper from our [ValuesController.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) class we simply include the service as a dependency via the constructor:
 
 ```csharp
-Public void ConfigureServices(IServiceCollection services)
+private IJavaScriptService _javaScriptService;
+public ValuesController(IJavaScriptService javaScriptService)
 {
-        private IJavaScriptService _javaScriptService;
-
-        public ValuesController(IJavaScriptService javaScriptService)
-        {
-            _javaScriptService = javaScriptService;
-        }
+    _javaScriptService = javaScriptService;
 }
 ```
-And to use the service for example the Hello typescript function:
+And to use the service for example the 'Hello' typescript function in [ValuesController.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) we do the following:
 
 ```csharp
-Public void ConfigureServices(IServiceCollection services)
+// GET api/values/hello
+[HttpGet("hello")]
+public async Task<IActionResult> Hello()
 {
-        // GET api/values/hello
-        [HttpGet("hello")]
-        public async Task<IActionResult> Hello()
-        {
-            string ret = await _javaScriptService.Hello("Michael");
-            return Ok(ret);
-        }
+    string ret = await _javaScriptService.Hello("Michael");
+    return Ok(ret);
 }
 ```
 
-Which calls the 'Hello' method in [JavaScriptService.cs](https://JavaScriptService.cs)
+Which calls the 'Hello' method inside [JavaScriptService.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs)
 ```csharp
-        public async Task<string> Hello(string name)
-        {
-            string path = Path.Combine(_scriptFolder, "./scripts/hello");
-            var result = await _nodeServices.InvokeAsync<string>(path, name);
-            return result;
-        }
+    public async Task<string> Hello(string name)
+    {
+        string path = Path.Combine(_scriptFolder, "./scripts/hello");
+        var result = await _nodeServices.InvokeAsync<string>(path, name);
+        return result;
+    }
 ```
 
 And that is it!  
 
-The hello.ts typescript file automatically gets compiled into a corresponding javascript file called hello.js which also lives in the scripts folder.
-The node services picks the JS code up from the ./scripts/hello path and executes accordingly.
+The [hello.ts](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.ts) typescript file automatically gets compiled into a corresponding javascript file called [hello.js](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.js) which also lives in the scripts folder.
+
+On execution the node services picks the JS up from the ./scripts/hello path and executes accordingly.
 
 ### Building and Running The Project
 
