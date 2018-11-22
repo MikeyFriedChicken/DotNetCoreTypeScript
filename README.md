@@ -31,7 +31,7 @@ Hence, this post will focus on setting up a .net core project to do just this w
 | PDF Make (example JS dependency used) | http://pdfmake.org |
 
 ### Configure your Project
-Simple add the following line to ConfigureServices in your [Startup.cs](MikeyFriedChicken.DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) file:
+Simple add the following line to ConfigureServices in your [Startup.cs](https://github.com/MikeyFriedChicken/DotNetCoreTypeScript/blob/master/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) file:
 ```csharp
 Public void ConfigureServices(IServiceCollection services)
 {
@@ -50,7 +50,7 @@ public JavaScriptService([FromServices]INodeServices nodeServices, string script
     _scriptFolder = scriptFolder;
 }
 ```
-This is achieved by registering our new IJavaScriptService instance in the ConfigureServices method in [Startup.cs](MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) which will now look like this:
+This is achieved by registering our new IJavaScriptService instance in the ConfigureServices method in [Startup.cs](https://github.com/MikeyFriedChicken/DotNetCoreTypeScript/blob/master/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) which will now look like this:
 
 ```csharp
 Public void ConfigureServices(IServiceCollection services)
