@@ -41,7 +41,7 @@ Public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Next We create a wrapper class called [JavaScriptService.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs).  This contains the following constructor.  The NodeServices instance automatically gets injected.
+Next We create a wrapper class called [JavaScriptService.cs](MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs).  This contains the following constructor.  The NodeServices instance automatically gets injected.
 
 ```csharp
 public JavaScriptService([FromServices]INodeServices nodeServices, string scriptFolder)
@@ -50,7 +50,7 @@ public JavaScriptService([FromServices]INodeServices nodeServices, string script
     _scriptFolder = scriptFolder;
 }
 ```
-This is achieved by registering our new IJavaScriptService instance in the ConfigureServices method in [Startup.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Startup.cs) which will now look like this:
+This is achieved by registering our new IJavaScriptService instance in the ConfigureServices method in [Startup.cs](DotNetCoreTypeScript/Startup.cs) which will now look like this:
 
 ```csharp
 Public void ConfigureServices(IServiceCollection services)
@@ -66,7 +66,7 @@ Public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-So to use our node js wrapper from our [ValuesController.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) class we simply include the service as a dependency via the constructor:
+So to use our node js wrapper from our [ValuesController.cs](MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) class we simply include the service as a dependency via the constructor:
 
 ```csharp
 private IJavaScriptService _javaScriptService;
@@ -75,7 +75,7 @@ public ValuesController(IJavaScriptService javaScriptService)
     _javaScriptService = javaScriptService;
 }
 ```
-And to use the service for example the 'Hello' typescript function in [ValuesController.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) we do the following:
+And to use the service for example the 'Hello' typescript function in [ValuesController.cs](MikeyFriedChicken.DotNetCoreTypeScript/Controllers/ValuesController.cs) we do the following:
 
 ```csharp
 // GET api/values/hello
@@ -87,7 +87,7 @@ public async Task<IActionResult> Hello()
 }
 ```
 
-Which calls the 'Hello' method inside [JavaScriptService.cs](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs)
+Which calls the 'Hello' method inside [JavaScriptService.cs](MikeyFriedChicken.DotNetCoreTypeScript/Services/JavaScriptService.cs)
 ```csharp
     public async Task<string> Hello(string name)
     {
@@ -99,7 +99,7 @@ Which calls the 'Hello' method inside [JavaScriptService.cs](DotNetCoreTypeScrip
 
 And that is it!  
 
-The [hello.ts](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.ts) typescript file automatically gets compiled into a corresponding javascript file called [hello.js](DotNetCoreTypeScript/MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.js) which also lives in the scripts folder.
+The [hello.ts](MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.ts) typescript file automatically gets compiled into a corresponding javascript file called [hello.js](MikeyFriedChicken.DotNetCoreTypeScript/scripts/hello.js) which also lives in the scripts folder.
 
 On execution the node services picks the JS up from the ./scripts/hello path and executes accordingly.
 
