@@ -76,12 +76,12 @@ namespace MikeyFriedChicken.DotNetCoreTypeScript.Controllers
             return Ok(ret);
         }
 
-        // GET api/values/hello
+        // GET api/values/makepdf
         [HttpGet("makepdf")]
         public async Task<IActionResult> MakePDF()
         {
-            JObject ret = await _javaScriptService.MakePDF("Michael");
-            return Ok(ret.ToString(Formatting.Indented));
+            var ret = await _javaScriptService.MakePDF("Michael");
+            return File(ret, "application/pdf");
         }
     }
 }
