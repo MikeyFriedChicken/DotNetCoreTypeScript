@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MikeyFriedChicken.DotNetCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MikeyFriedChicken.DotNetCoreTypeScript.Tests", "MikeyFriedChicken.DotNetCoreTypeScript.Tests\MikeyFriedChicken.DotNetCoreTypeScript.Tests.csproj", "{275C29B7-6651-49F8-BA71-0B6DF133121D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5936BC7B-A501-456F-A655-561FF9577E64}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
