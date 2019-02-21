@@ -1,5 +1,7 @@
 # Running Typescript and Javascript using Node JS in .Net Core
 
+Click [here](https://medium.com/@michaelceber/running-typescript-and-javascript-using-node-js-in-net-core-ab2e8ba7ff4d) for the Medium post.
+
 ### Introduction
 
 There are many articles which focus on either using Javascript or Typescript in .NET Core for the purpose of the client interface, whether it be for Angular, React or general single page applications.
